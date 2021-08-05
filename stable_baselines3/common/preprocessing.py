@@ -140,7 +140,7 @@ def get_obs_shape(
     :param observation_space:
     :return:
     """
-    if isinstance(observation_space, spaces.Box):
+    if isinstance(observation_space, spaces.Box) or isinstance(observation_space, spaces.MultiBinary):
         return observation_space.shape
     elif isinstance(observation_space, spaces.Discrete):
         # Observation is an int
@@ -148,9 +148,6 @@ def get_obs_shape(
     elif isinstance(observation_space, spaces.MultiDiscrete):
         # Number of discrete features
         return (int(len(observation_space.nvec)),)
-    elif isinstance(observation_space, spaces.MultiBinary):
-        # Number of binary features
-        return (int(observation_space.n),)
     elif isinstance(observation_space, spaces.Dict):
         return {key: get_obs_shape(subspace) for (key, subspace) in observation_space.spaces.items()}
 
